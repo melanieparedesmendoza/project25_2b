@@ -14,7 +14,7 @@ class City:
         self.hosts = {}
         self.is_v1_active = is_v1_active # Flag para la versión modificada
 
-        random.seed(seed) # Asegura la reproducibilidad
+        # random.seed(seed) # Asegura la reproducibilidad
 
     # METODO 1
     def initialize(self):
