@@ -97,4 +97,66 @@ class City:
 
         return approved_transactions # Devolvemos la lista de transacciones aprovadas
     
-    #MODULO 3
+     # METODO 3
+    def execute_transactions(self, transactions):
+        """Realiza las transferencias de dinero y propiedad."""
+        for tx in transactions:
+             # Para cada una de las transacciones recuperamos la informacion que nos pide el enunciado
+            # Primero obtenmos los identificadores
+            place_id = tx['place_id']
+            buyer_id = tx['buyer_id']
+            seller_id = tx['seller_id']
+            bid_price = tx['bid_price']
+
+             # Y ahora las intancias a partir de los identidicadores
+            place = self.places[place_id]
+            buyer = self.hosts[buyer_id]
+            seller = self.hosts[seller_id]
+
+            # 1. Actualizar Propiedad
+            if place_id in seller.assets:
+                seller.assets.remove(place_id)  #Eliminamos la propiedad de los assets que posee el seller
+            buyer.assets.add(place_id) # añadimos la propiedad comprada al comprador
+            place.host_id = buyer_id # actualizamos el propietario de la vivienda comprada, es decir, asignamos el id del comprador a la vivienda
+
+            # 2. Actualizar Fondos
+            buyer.profits -= bid_price
+            seller.profits += bid_price
+
+            # 3. Registrar Historial de Precios
+            place.price_history[self.step] = bid_price
+
+    #METODO 4
+    def clear_market(self):
+        """Coordina el proceso completo de clearing."""
+        all_bids = []
+        for host in self.hosts.values(): # Para cada uno de los hosts miramos si...
+            # tienes propiedades y su presupuesto es mayor a 0.
+            if host.assets and host.profits > 0:
+                # extend es como append pero para varios elementos. Añades todas las bids creadas a all_bids
+                all_bids.extend(host.make_bids(self))
+
+        approved_transactions = self.approve_bids(all_bids) #Creamos todas las transacciones
+
+        if approved_transactions: # si hay una o mas transacciones las ejecutamos
+            self.execute_transactions(approved_transactions)
+
+        return approved_transactions # devolvemos las transacciones aprovadas
+
+    #METODO 5
+    def iterate(self):
+        """Avanza la simulación un paso (mes)."""
+        self.step += 1
+
+        # 1. Actualizar Ocupación/Demanda
+        for place in self.places.values():
+            place.update_occupancy()
+
+        # 2. Actualizar Ganancias (antes de pujar)
+        for host in self.hosts.values():
+            host.update_profits(self)
+
+        # 3. Limpiar el Mercado (Bids y Transactions)
+        transactions = self.clear_market()
+
+        return transactions
