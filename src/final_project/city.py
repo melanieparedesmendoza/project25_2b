@@ -44,7 +44,7 @@ class City:
             self.places[place_id] = place
 
             # Crea el Host. Le pasamos el área de origen
-            host = Host(host_id_counter, place_id, place.area)
+            host = Host(host_id_counter, place, self)
             self.hosts[host_id_counter] = host
 
             host_id_counter += 1 # Aumentamos el contador, es decir pasamos a la siguiente celda
