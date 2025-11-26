@@ -47,15 +47,12 @@ class Host:
             place = city.places[pid] # recuperamos el objeto Place a partir de su identificador
             ask_price = place.get_ask_price() # Obtenemos el precio de venta
 
-            # ----------------------------------------------------------------------
-            # [Inicio] Lógica para el Graph 2 V1: Modificación de la Regla
-            # Descomenta las siguientes 2 líneas y comenta la anterior para probar V1
-            # ----------------------------------------------------------------------
+            # Lógica V1: El host solo puede comprar en su área de origen
             if city.is_v1_active and place.area != self.area_of_origin:
                 continue # El host solo puede comprar en su área de origen (V1)
-            # ----------------------------------------------------------------------
+            
             # [Fin] Lógica V1
-            # ----------------------------------------------------------------------
+            
 
             # Condición de oferta: el host puede pagar
             if self.profits >= ask_price:
