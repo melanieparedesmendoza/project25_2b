@@ -1,15 +1,17 @@
 # src/final_project/hosts.py
 
 class Host:
-    def __init__(self, host_id, place_id, area_of_origin):
+    def __init__(self, host_id, place, city):
         self.host_id = host_id
-        
+        self.city = city
         self.profits = 0.0
+        
+        # place es un OBJETO Place
+        self.area = place.area
+        self.assets = {place.place_id}
 
-        self.assets = {place_id}
-
-        self.area_of_origin = area_of_origin
-
+        # Para Graph 1:
+        self.area_of_origin = place.area
 
     def update_profits(self, city):
         """Actualiza los fondos del host con las ganancias mensuales de sus listings."""
