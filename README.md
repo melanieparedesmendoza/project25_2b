@@ -1,5 +1,5 @@
 # project25_2b
-# Programmin I - Final Project
+# Programming I - Final Project
 
 Group Members:
 * Melanie Paredes Mendoza (username: melanieparedesmendoza)
