@@ -80,13 +80,13 @@ def generate_graph1(wealth_df, filename="reports/graph1.png"):
     # 3. Graficar
     plt.bar(wealth_df['host_id'].astype(str), wealth_df['wealth'], color=bar_colors)
     
-    plt.title('Riqueza Total de los Hosts al Final de la Simulación', fontsize=16)
-    plt.xlabel('ID del Host (Ordenado por Riqueza)', fontsize=14)
-    plt.ylabel('Riqueza Total (Profits + Valor de Activos)', fontsize=14)
+    plt.title('Total Wealth of Hosts at the End of the Simulation', fontsize=16)
+    plt.xlabel('Host ID (Sorted by Wealth)', fontsize=14)
+    plt.ylabel('Total Wealth (Profits + Asset Value)', fontsize=14)
     
     # 4. Leyenda para los colores de las áreas
     handles = [plt.Rectangle((0,0),1,1, color=colors[area]) for area in colors]
-    labels = [f'Área {area}' for area in colors]
+    labels = [f'Area {area}' for area in colors]
     plt.legend(handles, labels, title='Área de Origen', fontsize=12)
     
     # Reducir ticks del eje X para mejor visualización
@@ -109,13 +109,13 @@ def generate_graph2(avg_price_history, version, filename_template="reports/graph
     plt.plot(range(1, len(avg_price_history) + 1), avg_price_history, 
              label=f'V{version} Promedio de Precio', color='purple' if version == 0 else 'green')
     
-    title = f'V{version}: Evolución del Precio de Venta Promedio de Propiedades'
+    title = f'V{version}: Evolution of the Average Sale Price'
     if version == 1:
-        title += ' (Regla Modificada: Hosts solo compran en Área de Origen)'
+        title += ' (Modified Rule: Hosts Only Buy in Their Origin Area)'
         
     plt.title(title)
-    plt.xlabel('Paso de Tiempo (Meses)')
-    plt.ylabel('Precio Promedio de Venta')
+    plt.xlabel('Time Step (Months)')
+    plt.ylabel('Average Sale Price')
     plt.grid(True, alpha=0.5)
     
     plt.tight_layout()
